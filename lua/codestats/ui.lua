@@ -1,5 +1,5 @@
-local Popup = require('nui.popup')
 local NuiTable = require('nui.table')
+local Popup = require('nui.popup')
 local event = require('nui.utils.autocmd').event
 
 local M = {}
@@ -7,7 +7,7 @@ local api = require('codestats.api')
 
 -- Helper functions
 local function format_xp(xp)
-  return string.format("%d", xp)
+  return string.format('%d', xp)
 end
 
 local function format_date_xp(dates)
@@ -15,17 +15,21 @@ local function format_date_xp(dates)
   for date, xp in pairs(dates) do
     table.insert(sorted_dates, { date = date, xp = xp })
   end
-  table.sort(sorted_dates, function(a, b) return a.date > b.date end)
+  table.sort(sorted_dates, function(a, b)
+    return a.date > b.date
+  end)
   return sorted_dates
 end
 
 -- Center align text in width
 local function center_align(text, width)
   local padding = width - #text
-  if padding <= 0 then return text end
+  if padding <= 0 then
+    return text
+  end
   local left_pad = math.floor(padding / 2)
   local right_pad = padding - left_pad
-  return string.rep(" ", left_pad) .. text .. string.rep(" ", right_pad)
+  return string.rep(' ', left_pad) .. text .. string.rep(' ', right_pad)
 end
 
 local function create_loading_popup()
@@ -33,13 +37,13 @@ local function create_loading_popup()
     enter = true,
     focusable = true,
     border = {
-      style = "rounded",
+      style = 'rounded',
       text = {
-        top = " Loading CodeStats Data ",
-        top_align = "center",
+        top = ' Loading CodeStats Data ',
+        top_align = 'center',
       },
     },
-    position = "50%",
+    position = '50%',
     size = {
       width = 60,
       height = 6,
@@ -50,10 +54,10 @@ local function create_loading_popup()
 
   vim.schedule(function()
     local lines = {
-      "",
-      "  Loading your CodeStats data...",
-      "  Please wait...",
-      "",
+      '',
+      '  Loading your CodeStats data...',
+      '  Please wait...',
+      '',
     }
     vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, lines)
   end)
@@ -67,16 +71,16 @@ local function create_stats_popup(stats)
     enter = true,
     focusable = true,
     border = {
-      style = "rounded",
+      style = 'rounded',
       text = {
-        top = " CodeStats - " .. stats.username .. " ",
-        top_align = "center",
+        top = ' CodeStats - ' .. stats.username .. ' ',
+        top_align = 'center',
       },
     },
-    position = "50%",
+    position = '50%',
     size = {
       width = width + 4,
-      height = "80%",
+      height = '80%',
     },
     buf_options = {
       modifiable = true,
@@ -88,7 +92,9 @@ local function create_stats_popup(stats)
 
   -- Close handlers
   for _, key in ipairs({ 'q', '<Esc>', '<C-c>' }) do
-    popup:map('n', key, function() popup:unmount() end, { noremap = true })
+    popup:map('n', key, function()
+      popup:unmount()
+    end, { noremap = true })
   end
 
   local function append_lines(lines)
@@ -103,12 +109,12 @@ local function create_stats_popup(stats)
 
   -- Overall Stats
   append_lines({
-    "Overall Statistics",
-    string.format("Total XP: %s", format_xp(stats.total_xp)),
-    string.format("New XP: %s", format_xp(stats.new_xp)),
-    "",
-    "Languages",
-    "",
+    'Overall Statistics',
+    string.format('Total XP: %s', format_xp(stats.total_xp)),
+    string.format('New XP: %s', format_xp(stats.new_xp)),
+    '',
+    'Languages',
+    '',
   })
 
   -- Languages Table
@@ -117,30 +123,32 @@ local function create_stats_popup(stats)
     table.insert(sorted_languages, {
       name = lang,
       xp = data.xp,
-      new_xp = data.new_xp
+      new_xp = data.new_xp,
     })
   end
-  table.sort(sorted_languages, function(a, b) return a.xp > b.xp end)
+  table.sort(sorted_languages, function(a, b)
+    return a.xp > b.xp
+  end)
 
   local languages_table = NuiTable({
     bufnr = popup.bufnr,
     columns = {
       {
-        header = "Language",
-        accessor_key = "name",
-        align = "left",
+        header = 'Language',
+        accessor_key = 'name',
+        align = 'left',
         padding = { left = 2, right = 2 },
       },
       {
-        header = "Total XP",
-        accessor_key = "total_xp",
-        align = "right",
+        header = 'Total XP',
+        accessor_key = 'total_xp',
+        align = 'right',
         padding = { left = 2, right = 2 },
       },
       {
-        header = "New XP",
-        accessor_key = "new_xp",
-        align = "right",
+        header = 'New XP',
+        accessor_key = 'new_xp',
+        align = 'right',
         padding = { left = 2, right = 2 },
       },
     },
@@ -158,7 +166,7 @@ local function create_stats_popup(stats)
   vim.api.nvim_buf_set_option(popup.bufnr, 'modifiable', false)
 
   -- Add spacing for machines section
-  append_lines({ "", "Machines", "" })
+  append_lines({ '', 'Machines', '' })
 
   -- Machines Table
   local sorted_machines = {}
@@ -166,30 +174,32 @@ local function create_stats_popup(stats)
     table.insert(sorted_machines, {
       name = machine,
       xp = data.xp,
-      new_xp = data.new_xp
+      new_xp = data.new_xp,
     })
   end
-  table.sort(sorted_machines, function(a, b) return a.xp > b.xp end)
+  table.sort(sorted_machines, function(a, b)
+    return a.xp > b.xp
+  end)
 
   local machines_table = NuiTable({
     bufnr = popup.bufnr,
     columns = {
       {
-        header = "Machine",
-        accessor_key = "name",
-        align = "left",
+        header = 'Machine',
+        accessor_key = 'name',
+        align = 'left',
         padding = { left = 2, right = 2 },
       },
       {
-        header = "Total XP",
-        accessor_key = "total_xp",
-        align = "right",
+        header = 'Total XP',
+        accessor_key = 'total_xp',
+        align = 'right',
         padding = { left = 2, right = 2 },
       },
       {
-        header = "New XP",
-        accessor_key = "new_xp",
-        align = "right",
+        header = 'New XP',
+        accessor_key = 'new_xp',
+        align = 'right',
         padding = { left = 2, right = 2 },
       },
     },
@@ -207,7 +217,7 @@ local function create_stats_popup(stats)
   vim.api.nvim_buf_set_option(popup.bufnr, 'modifiable', false)
 
   -- Add spacing for recent activity section
-  append_lines({ "", "Recent Activity", "" })
+  append_lines({ '', 'Recent Activity', '' })
 
   -- Recent Activity Table
   local recent_dates = format_date_xp(stats.dates)
@@ -215,15 +225,15 @@ local function create_stats_popup(stats)
     bufnr = popup.bufnr,
     columns = {
       {
-        header = "Date",
-        accessor_key = "date",
-        align = "left",
+        header = 'Date',
+        accessor_key = 'date',
+        align = 'left',
         padding = { left = 2, right = 2 },
       },
       {
-        header = "XP",
-        accessor_key = "xp",
-        align = "right",
+        header = 'XP',
+        accessor_key = 'xp',
+        align = 'right',
         padding = { left = 2, right = 2 },
       },
     },
@@ -232,7 +242,7 @@ local function create_stats_popup(stats)
         date = date_data.date,
         xp = format_xp(date_data.xp),
       }
-    end, { unpack(recent_dates, 1, 5) }),     -- Show only last 5 days
+    end, { unpack(recent_dates, 1, 5) }), -- Show only last 5 days
   })
 
   vim.api.nvim_buf_set_option(popup.bufnr, 'modifiable', true)
@@ -240,7 +250,7 @@ local function create_stats_popup(stats)
   vim.api.nvim_buf_set_option(popup.bufnr, 'modifiable', false)
 
   -- Add closing message
-  append_lines({ "", "Press q, <Esc> or <C-c> to close" })
+  append_lines({ '', 'Press q, <Esc> or <C-c> to close' })
 
   -- Set final buffer options
   vim.api.nvim_buf_set_option(popup.bufnr, 'modifiable', false)

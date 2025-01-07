@@ -6,10 +6,22 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs { inherit system; };
+
+        # Generate node packages using node2nix
+        nodeDependencies = (pkgs.callPackage ./node-packages.nix {
+          inherit (pkgs) nodejs;
+          inherit (pkgs.stdenv.hostPlatform) system;
+        }).nodeDependencies;
 
         # Create a custom neovim wrapper with development tools
         dev-environment = pkgs.symlinkJoin {
@@ -33,11 +45,11 @@
 
                   -- Plugin configuration
                   local config = {
-                    api_key = '',
+                    api_key = 'your token',
                     excluded_filetypes = { 'help', 'text', 'txt', 'log' },
                     pulse_interval = 5000,
-                    username = '',
-                    debug = true
+                    username = 'skinnyvans',
+                    debug = false
                   }
 
                   -- Function to setup/reload the plugin
@@ -98,13 +110,21 @@
           buildInputs = [ dev-environment ];
         };
 
-        devShells.publish = pkgs.mkShell pkgs.mkShell {
+        devShells.publish = pkgs.mkShell {
           buildInputs = with pkgs; [
-            nodejs_23
+            nodejs
+            node2nix
+            nodeDependencies
             semantic-release
-            nodePackages."@semantic-release/git"
-            nodePackages."@semantic-release/github"
           ];
+
+          shellHook = ''
+            export NODE_PATH=${nodeDependencies}/lib/node_modules
+            export PATH="${nodeDependencies}/bin:$PATH"
+            echo "Node.js development environment ready!"
+          '';
         };
-      });
+
+      }
+    );
 }

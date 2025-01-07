@@ -18,11 +18,12 @@ function M.send_pulse(pulse_data, callback)
     callback = vim.schedule_wrap(function(response)
       local success = response.status >= 200 and response.status < 300
       if not success then
-        print("Response Body:", response.body)
+        print('Response Body:', response.body)
         vim.notify(
-          string.format('CodeStats: Failed to send pulse (Status: %d)\nBody: %s',
+          string.format(
+            'CodeStats: Failed to send pulse (Status: %d)\nBody: %s',
             response.status,
-            response.body or "No response body"
+            response.body or 'No response body'
           ),
           vim.log.levels.ERROR
         )
@@ -54,7 +55,7 @@ function M.fetch_profile_stats(callback)
           for name, machine_data in pairs(data.machines or {}) do
             machines[name] = {
               xp = machine_data.xps or 0,
-              new_xp = machine_data.new_xps or 0
+              new_xp = machine_data.new_xps or 0,
             }
           end
 
@@ -63,7 +64,7 @@ function M.fetch_profile_stats(callback)
           for name, lang_data in pairs(data.languages or {}) do
             languages[name] = {
               xp = lang_data.xps or 0,
-              new_xp = lang_data.new_xps or 0
+              new_xp = lang_data.new_xps or 0,
             }
           end
 
@@ -82,9 +83,10 @@ function M.fetch_profile_stats(callback)
         end
       else
         vim.notify(
-          string.format('Failed to fetch CodeStats data (Status: %d)\nBody: %s',
+          string.format(
+            'Failed to fetch CodeStats data (Status: %d)\nBody: %s',
             response.status,
-            response.body or "No response body"
+            response.body or 'No response body'
           ),
           vim.log.levels.ERROR
         )

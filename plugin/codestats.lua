@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 if vim.g.loaded_codestats then
   return
 end
@@ -15,7 +16,6 @@ end, {})
 vim.api.nvim_create_user_command('CodeStatsShow', function()
   require('codestats.ui').show_stats()
 end, {})
-
 
 -- Create autocommand to track changes
 local group = vim.api.nvim_create_augroup('CodeStatsChanges', { clear = true })

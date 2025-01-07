@@ -1,0 +1,33 @@
+name: Release
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write # Required for creating releases
+  issues: write # Required for creating issues
+  pull-requests: write # Required for creating PRs
+  packages: write # If publishing to GitHub Packages
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Setup Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Use the specific publish devShell
+          nix develop .#publish --command semantic-release

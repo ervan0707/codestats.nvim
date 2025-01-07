@@ -14,7 +14,9 @@ end
 
 -- Check if filetype should be tracked
 function M.should_track_filetype(ft)
-  if not ft or ft == '' then return false end
+  if not ft or ft == '' then
+    return false
+  end
 
   for _, excluded in ipairs(config.options.excluded_filetypes) do
     if ft == excluded then
@@ -30,13 +32,11 @@ function M.get_iso_timestamp()
   -- Get current time
   local ts = os.time()
   -- Convert to ISO 8601 format with timezone
-  local tz_offset = os.date("%z", ts)
+  local tz_offset = os.date('%z', ts)
   -- Format like "2016-04-24T01:43:56+12:00"
-  local formatted = os.date("%Y-%m-%dT%H:%M:%S", ts)
+  local formatted = os.date('%Y-%m-%dT%H:%M:%S', ts)
   -- Insert colon in timezone offset ("+0800" -> "+08:00")
-  local tz_formatted = string.format("%s:%s",
-    string.sub(tz_offset, 1, 3),
-    string.sub(tz_offset, 4))
+  local tz_formatted = string.format('%s:%s', string.sub(tz_offset, 1, 3), string.sub(tz_offset, 4))
   return formatted .. tz_formatted
 end
 
@@ -194,13 +194,13 @@ function M.normalize_filetype(ft)
   end
 
   -- Handle compound filetypes (e.g., 'javascript.jsx')
-  local base_ft = ft:match("^([^%.]+)")
+  local base_ft = ft:match('^([^%.]+)')
   if base_ft and ft_map[base_ft] then
     return ft_map[base_ft]
   end
 
   -- Default: capitalize first letter if no mapping exists
-  return ft:gsub("^%l", string.upper)
+  return ft:gsub('^%l', string.upper)
 end
 
 return M
