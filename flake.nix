@@ -17,12 +17,6 @@
       let
         pkgs = import nixpkgs { inherit system; };
 
-        # Generate node packages using node2nix
-        nodeDependencies = (pkgs.callPackage ./node-packages.nix {
-          inherit (pkgs) nodejs;
-          inherit (pkgs.stdenv.hostPlatform) system;
-        }).nodeDependencies;
-
         # Create a custom neovim wrapper with development tools
         dev-environment = pkgs.symlinkJoin {
           name = "codestats-dev-environment";
@@ -108,21 +102,6 @@
 
         devShells.default = pkgs.mkShell {
           buildInputs = [ dev-environment ];
-        };
-
-        devShells.publish = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            nodejs
-            node2nix
-            nodeDependencies
-            semantic-release
-          ];
-
-          shellHook = ''
-            export NODE_PATH=${nodeDependencies}/lib/node_modules
-            export PATH="${nodeDependencies}/bin:$PATH"
-            echo "Node.js development environment ready!"
-          '';
         };
 
       }
