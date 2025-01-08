@@ -47,16 +47,23 @@ function M.check()
   local nvim_version = vim.version()
   local min_version = { 0, 5, 0 }
 
-  if nvim_version.major > min_version[1]
-      or (nvim_version.major == min_version[1] and nvim_version.minor >= min_version[2]) then
-    health.ok(string.format('Neovim version %d.%d.%d',
-      nvim_version.major, nvim_version.minor, nvim_version.patch))
+  if
+    nvim_version.major > min_version[1]
+    or (nvim_version.major == min_version[1] and nvim_version.minor >= min_version[2])
+  then
+    health.ok(string.format('Neovim version %d.%d.%d', nvim_version.major, nvim_version.minor, nvim_version.patch))
   else
-    health.report_error(string.format(
-      'Neovim version %d.%d.%d is too old. Minimum required: %d.%d.%d',
-      nvim_version.major, nvim_version.minor, nvim_version.patch,
-      min_version[1], min_version[2], min_version[3]
-    ))
+    health.report_error(
+      string.format(
+        'Neovim version %d.%d.%d is too old. Minimum required: %d.%d.%d',
+        nvim_version.major,
+        nvim_version.minor,
+        nvim_version.patch,
+        min_version[1],
+        min_version[2],
+        min_version[3]
+      )
+    )
   end
 end
 

@@ -48,6 +48,7 @@ function M.normalize_filetype(ft)
     ['cpp'] = 'C++',
     ['c++'] = 'C++',
     ['cs'] = 'C#',
+    ['csharp'] = 'C#',
     ['java'] = 'Java',
     ['py'] = 'Python',
     ['python'] = 'Python',
@@ -66,18 +67,22 @@ function M.normalize_filetype(ft)
     ['js'] = 'JavaScript',
     ['javascript'] = 'JavaScript',
     ['javascript.jsx'] = 'JavaScript',
+    ['javascriptreact'] = 'JavaScript (React)',
+    ['jsx-tags'] = 'JavaScript (JSX)',
     ['ts'] = 'TypeScript',
     ['typescript'] = 'TypeScript',
     ['typescript.tsx'] = 'TypeScript',
+    ['typescriptreact'] = 'TypeScript (React)',
     ['jsx'] = 'JavaScript',
     ['tsx'] = 'TypeScript',
     ['html'] = 'HTML',
     ['css'] = 'CSS',
     ['scss'] = 'SCSS',
     ['sass'] = 'Sass',
-    ['less'] = 'Less',
+    ['less'] = 'LESS',
     ['vue'] = 'Vue',
     ['svelte'] = 'Svelte',
+    ['coffeescript'] = 'CoffeeScript',
 
     -- Functional Languages
     ['hs'] = 'Haskell',
@@ -91,6 +96,7 @@ function M.normalize_filetype(ft)
     ['erlang'] = 'Erlang',
     ['fs'] = 'F#',
     ['fsharp'] = 'F#',
+    ['fsharpcss'] = 'F#',
     ['ml'] = 'OCaml',
     ['ocaml'] = 'OCaml',
     ['elm'] = 'Elm',
@@ -106,6 +112,8 @@ function M.normalize_filetype(ft)
     ['powershell'] = 'PowerShell',
     ['bat'] = 'Batch',
     ['cmd'] = 'Batch',
+    ['shellscript'] = 'Shell Script',
+    ['makefile'] = 'Makefile',
 
     -- Data and Config Languages
     ['json'] = 'JSON',
@@ -113,9 +121,12 @@ function M.normalize_filetype(ft)
     ['yml'] = 'YAML',
     ['toml'] = 'TOML',
     ['xml'] = 'XML',
+    ['xsl'] = 'XSL',
     ['sql'] = 'SQL',
     ['graphql'] = 'GraphQL',
     ['ini'] = 'INI',
+    ['properties'] = 'Properties',
+    ['diff'] = 'Diff',
 
     -- Documentation and Markup
     ['md'] = 'Markdown',
@@ -137,22 +148,26 @@ function M.normalize_filetype(ft)
     ['dart'] = 'Dart',
     ['flutter'] = 'Dart',
     ['objc'] = 'Objective-C',
+    ['objective-c'] = 'Objective-C',
     ['objcpp'] = 'Objective-C++',
 
     -- Infrastructure and DevOps
-    ['dockerfile'] = 'Dockerfile',
+    ['dockerfile'] = 'Docker',
     ['terraform'] = 'HCL',
     ['tf'] = 'HCL',
     ['hcl'] = 'HCL',
     ['ansible'] = 'YAML',
     ['k8s'] = 'YAML',
     ['helm'] = 'YAML',
+    ['git-commit'] = 'Git',
+    ['git-rebase'] = 'Git',
 
     -- Other Languages
     ['r'] = 'R',
     ['julia'] = 'Julia',
     ['jl'] = 'Julia',
     ['perl'] = 'Perl',
+    ['perl6'] = 'Perl 6',
     ['pl'] = 'Perl',
     ['nim'] = 'Nim',
     ['d'] = 'D',
@@ -170,6 +185,11 @@ function M.normalize_filetype(ft)
     ['ada'] = 'Ada',
     ['solidity'] = 'Solidity',
     ['sol'] = 'Solidity',
+    ['vb'] = 'Visual Basic',
+    ['razor'] = 'Razor',
+    ['qsharp'] = 'Q#',
+    ['hlsl'] = 'HLSL',
+    ['shaderlab'] = 'Shaderlab',
 
     -- Template Languages
     ['j2'] = 'Jinja2',
@@ -178,6 +198,13 @@ function M.normalize_filetype(ft)
     ['mustache'] = 'Mustache',
     ['handlebars'] = 'Handlebars',
     ['hbs'] = 'Handlebars',
+    ['jade'] = 'Pug',
+
+    -- Plain Text and Logs
+    ['plaintext'] = 'Plain text',
+    ['text'] = 'Plain text',
+    ['txt'] = 'Plain text',
+    ['log'] = 'Log',
 
     -- Test Files
     ['spec.js'] = 'JavaScript',

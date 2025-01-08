@@ -1,8 +1,8 @@
 local M = {}
 local api = require('codestats.api')
 local config = require('codestats.config')
-local utils = require('codestats.utils')
 local debug = require('codestats.debug')
+local utils = require('codestats.utils')
 
 -- Plugin state
 local enabled = false
@@ -60,13 +60,13 @@ function M.send_pulse()
 
   local pulse_data = {
     coded_at = utils.get_iso_timestamp(), -- Use coded_at instead of timestamp
-    xps = {}
+    xps = {},
   }
 
   for lang, xp in pairs(pending_xp) do
     table.insert(pulse_data.xps, {
       language = lang,
-      xp = math.floor(xp) -- Ensure XP is an integer
+      xp = math.floor(xp), -- Ensure XP is an integer
     })
   end
   debug.log('Preparing to send pulse')
@@ -93,10 +93,14 @@ function M.start_pulse_timer()
   debug.log(string.format('Starting pulse timer with interval: %d ms', interval))
 
   pulse_timer = vim.loop.new_timer()
-  pulse_timer:start(interval, interval, vim.schedule_wrap(function()
-    debug.log('Pulse timer triggered')
-    M.send_pulse()
-  end))
+  pulse_timer:start(
+    interval,
+    interval,
+    vim.schedule_wrap(function()
+      debug.log('Pulse timer triggered')
+      M.send_pulse()
+    end)
+  )
 end
 
 -- Stop the pulse timer
