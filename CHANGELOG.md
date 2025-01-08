@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/ervan0707/codestats.nvim/compare/v1.0.0...v1.1.0) (2025-01-08)
+
+
+### Features
+
+* **linguist:** ascend beyond mortal language limitations 🧠💪 ([96c4af0](https://github.com/ervan0707/codestats.nvim/commit/96c4af075ecdeb9023650d81a5eb1b358f68c1de))
+
 # 1.0.0 (2025-01-07)
 
 
