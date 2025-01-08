@@ -10,16 +10,6 @@
         "assets": ["CHANGELOG.md"]
       }
     ],
-
-    [
-      "@semantic-release/github",
-      {
-        "assets": [
-          { "path": "lua/*", "label": "Lua Plugins" },
-          { "path": "plugin/*", "label": "Lua Plugins" },
-          { "path": "README.md", "label": "Lua Plugins" }
-        ]
-      }
-    ]
+    ["@semantic-release/github"]
   ]
 }
