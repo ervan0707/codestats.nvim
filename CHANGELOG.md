@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/ervan0707/codestats.nvim/compare/v1.1.0...v1.1.1) (2025-01-09)
+
+
+### Bug Fixes
+
+* normalize language filetype (i forgor 💀) ([b2be50b](https://github.com/ervan0707/codestats.nvim/commit/b2be50b37e2f87994127c4f17587f4585d23b4b6))
+
 # [1.1.0](https://github.com/ervan0707/codestats.nvim/compare/v1.0.0...v1.1.0) (2025-01-08)
 
 
