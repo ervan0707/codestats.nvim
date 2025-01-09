@@ -65,7 +65,7 @@ function M.send_pulse()
 
   for lang, xp in pairs(pending_xp) do
     table.insert(pulse_data.xps, {
-      language = lang,
+      language = utils.normalize_filetype(lang),
       xp = math.floor(xp), -- Ensure XP is an integer
     })
   end
