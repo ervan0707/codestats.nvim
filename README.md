@@ -28,6 +28,7 @@ A Neovim plugin for tracking your coding statistics with [CodeStats.net](https:/
     nui-nvim
   ];
 })
+```
 
 ### [lazy.nvim](https://github.com/folke/lazy.nvim)
 ```lua
